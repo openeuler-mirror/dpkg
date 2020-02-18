@@ -1,0 +1,38 @@
+From 5ee4bdf24d9c61c42f781a89e09584468386fa02 Mon Sep 17 00:00:00 2001
+From: zhengchuan <zhengchuan@huawei.com>
+Date: Fri, 2 Aug 2019 17:28:53 +0800
+Subject: [PATCH] dpkg log: Change logfile permission to satisfy with safty
+
+---
+ debian/dpkg.logrotate | 2 +-
+ debian/dpkg.postinst  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/debian/dpkg.logrotate b/debian/dpkg.logrotate
+index cf36f08..c57052b 100644
+--- a/debian/dpkg.logrotate
++++ b/debian/dpkg.logrotate
+@@ -5,5 +5,5 @@
+ 	delaycompress
+ 	missingok
+ 	notifempty
+-	create 644 root root
++	create 640 root root
+ }
+diff --git a/debian/dpkg.postinst b/debian/dpkg.postinst
+index 9771d7f..674e0fd 100755
+--- a/debian/dpkg.postinst
++++ b/debian/dpkg.postinst
+@@ -19,7 +19,7 @@ create_database() {
+ create_logfile() {
+     logfile=/var/log/dpkg.log
+     touch $logfile
+-    chmod 644 $logfile
++    chmod 640 $logfile
+     chown root:root $logfile 2>/dev/null || chown 0:0 $logfile
+ }
+ 
+-- 
+1.7.12.4
+
+
