@@ -1,8 +1,9 @@
+%global enable_dev_package 0
+
 Name:		dpkg
 Version:	1.18.25
-Release:	9
+Release:	10
 Summary:	Package maintenance system for Debian Linux
-
 License:	GPLv2 and GPLv2+ and LGPLv2+ and Public Domain and BSD
 URL:		https://tracker.debian.org/pkg/dpkg
 Source0:	http://ftp.debian.org/debian/pool/main/d/%{name}/%{name}_%{version}.tar.xz
@@ -35,15 +36,17 @@ Provides:	dpkg-static = %{version}-%{release}
 %description devel
 The development package for dpkg.
 
+%if %{enable_dev_package}
 %package dev
 Summary:	Debian package development tools
 Requires:	dpkg-perl = %{version}-%{release} binutils bzip2 lzma
-Requires:	make patch xz perl(MIME::Lite)
+Requires:	make patch xz
 Obsoletes:	dpkg-devel < 1.16
 BuildArch:	noarch
 
 %description dev
 Debian package development tools for dpdk.
+%endif
 
 %package perl
 Summary:	Dpkg perl modules pacakge
@@ -149,7 +152,37 @@ chown root:root /var/log/dpkg.log 2>/dev/null || chown 0:0 /var/log/dpkg.log
 %exclude %{_libdir}/libdpkg.la
 %exclude %{_bindir}/update-alternatives
 %exclude %{_sysconfdir}/alternatives/
+%if %{enable_dev_package}
 %exclude %{_sbindir}/install-info
+%endif
+%if !%{enable_dev_package}
+%exclude %{_bindir}/dpkg-architecture
+%exclude %{_bindir}/dpkg-buildpackage
+%exclude %{_bindir}/dpkg-buildflags
+%exclude %{_bindir}/dpkg-checkbuilddeps
+%exclude %{_bindir}/dpkg-distaddfile
+%exclude %{_bindir}/dpkg-genbuildinfo
+%exclude %{_bindir}/dpkg-genchanges
+%exclude %{_bindir}/dpkg-gencontrol
+%exclude %{_bindir}/dpkg-gensymbols
+%exclude %{_bindir}/dpkg-mergechangelogs
+%exclude %{_bindir}/dpkg-name
+%exclude %{_bindir}/dpkg-parsechangelog
+%exclude %{_bindir}/dpkg-scanpackages
+%exclude %{_bindir}/dpkg-scansources
+%exclude %{_bindir}/dpkg-shlibdeps
+%exclude %{_bindir}/dpkg-source
+%exclude %{_bindir}/dpkg-vendor
+%exclude %{_datadir}/dpkg/*.mk
+%exclude /etc/dpkg/shlibs.*
+%exclude /usr/share/locale/ca/LC_MESSAGES/dpkg-dev.mo
+%exclude /usr/share/locale/de/LC_MESSAGES/dpkg-dev.mo
+%exclude /usr/share/locale/es/LC_MESSAGES/dpkg-dev.mo
+%exclude /usr/share/locale/fr/LC_MESSAGES/dpkg-dev.mo
+%exclude /usr/share/locale/pl/LC_MESSAGES/dpkg-dev.mo
+%exclude /usr/share/locale/ru/LC_MESSAGES/dpkg-dev.mo
+%exclude /usr/share/locale/sv/LC_MESSAGES/dpkg-dev.mo
+%endif
 
 %{perl_vendorlib}/Dselect
 %{_libexecdir}/dpkg/methods
@@ -159,6 +192,7 @@ chown root:root /var/log/dpkg.log 2>/dev/null || chown 0:0 /var/log/dpkg.log
 %{_libdir}/pkgconfig/libdpkg.pc
 %{_includedir}/dpkg/*.h
 
+%if %{enable_dev_package}
 %files dev -f dpkg-dev.lang
 %config(noreplace) %{_sysconfdir}/dpkg/shlibs.default
 %config(noreplace) %{_sysconfdir}/dpkg/shlibs.override
@@ -180,24 +214,30 @@ chown root:root /var/log/dpkg.log 2>/dev/null || chown 0:0 /var/log/dpkg.log
 %{_bindir}/dpkg-source
 %{_bindir}/dpkg-vendor
 %{_datadir}/dpkg/*.mk
+%endif
 
 %files perl
 %{perl_vendorlib}/Dpkg*
 %{_datadir}/dpkg/*.specs
 
 %files help
-%doc debian/changelog README AUTHORS THANKS TODO
+%doc debian/changelog README TODO
 %doc dselect/methods/multicd/README.multicd
-%doc debian/usertags debian/dpkg.cron.daily
+%doc debian/dpkg.cron.daily
 %doc AUTHORS THANKS debian/usertags doc/README.api
 %doc doc/frontend.txt doc/triggers.txt
 %{_mandir}/*
 %exclude %{_mandir}/it/man1/
 %exclude %{_mandir}/it/man5/
 %exclude %{_mandir}/pl/man1/
+%if %{enable_dev_package}
 %exclude %{_mandir}/man1/update-alternatives.1
 %exclude %{_mandir}/*/man1/update-alternatives.1
+%endif
 
 %changelog
+* Mon Mar 16 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.18.25-10
+- disable dpkg-dev
+
 * Wed Sep 11 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.18.25-9
 - Package init
