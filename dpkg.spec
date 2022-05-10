@@ -2,9 +2,9 @@
 
 Name:		dpkg
 Version:	1.18.25
-Release:	10
+Release:	11
 Summary:	Package maintenance system for Debian Linux
-License:	GPLv2 and GPLv2+ and LGPLv2+ and Public Domain and BSD
+License:        GPL-2.0-only and GPL-2.0-or-later and LGPL-2.0-or-later and Public Domain and BSD-2-Clause
 URL:		https://tracker.debian.org/pkg/dpkg
 Source0:	http://ftp.debian.org/debian/pool/main/d/%{name}/%{name}_%{version}.tar.xz
 
@@ -236,6 +236,9 @@ chown root:root /var/log/dpkg.log 2>/dev/null || chown 0:0 /var/log/dpkg.log
 %endif
 
 %changelog
+* Tue May 10 2022 chenchen <chen_aka_jan@163.com> - 1.18.25-11
+- License compliance rectification
+
 * Mon Mar 16 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.18.25-10
 - disable dpkg-dev
 
