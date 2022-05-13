@@ -239,7 +239,7 @@ chown root:root /var/log/dpkg.log 2>/dev/null || chown 0:0 /var/log/dpkg.log
 * Tue May 10 2022 chenchen <chen_aka_jan@163.com> - 1.18.25-11
 - License compliance rectification
 
-* Mon Mar 16 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.18.25-10
+* Mon Mar 16 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.18.25-10
 - disable dpkg-dev
 
 * Wed Sep 11 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.18.25-9
