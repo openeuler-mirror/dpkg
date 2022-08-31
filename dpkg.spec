@@ -2,7 +2,7 @@
 
 Name:		dpkg
 Version:	1.18.25
-Release:	11
+Release:	12
 Summary:	Package maintenance system for Debian Linux
 License:	GPLv2 and GPLv2+ and LGPLv2+ and Public Domain and BSD
 URL:		https://tracker.debian.org/pkg/dpkg
@@ -25,6 +25,7 @@ Requires(post): coreutils
 Patch1:		dpkg-fix-logrotate.patch
 Patch2:		dpkg-log-Change-logfile-permission-to-satisfy-with-s.patch
 Patch3:		CVE-2022-1664.patch
+Patch4:		add-loongarch-support.patch
 
 %description
 Dpkg is a tool to install, build, remove and manageDebian packages. The 
@@ -67,6 +68,10 @@ The help documents for dpkg.
 
 %prep
 %autosetup -n %{name}-%{version} -p1
+%ifarch loongarch64
+%_update_config_guess
+%_update_config_sub
+%endif
 
 cat << \EOF > %{name}-req
 #!/bin/sh
@@ -237,6 +242,9 @@ chown root:root /var/log/dpkg.log 2>/dev/null || chown 0:0 /var/log/dpkg.log
 %endif
 
 %changelog
+* Mon Aug 22 2022 mahailiang <mahailiang@uniontech.com> - 1.18.25-12
+- add loongarch support
+
 * Fri May 27 2022 houyingchao <houyingchao@h-partners.com> - 1.18.25-11
 - Fix CVE-2022-1664
 
