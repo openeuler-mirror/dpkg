@@ -1,0 +1,7 @@
+--- dpkg-1.18.25/data/cputable	2018-06-26 18:28:08.000000000 +0800
++++ dpkg-1.18.25.bak/data/cputable	2022-08-18 11:07:35.274982296 +0800
+@@ -51,3 +51,4 @@
+ sparc		sparc		sparc			32	big
+ sparc64		sparc64		sparc64			64	big
+ tilegx		tilegx		tilegx			64	little
++loongarch64	loongarch64	loongarch64		64	little
